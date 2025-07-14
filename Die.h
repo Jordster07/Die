@@ -1,21 +1,19 @@
 #ifndef DIE_H
 #define DIE_H
-#include <iostream>
 #include <string>
 
-class Die{
+class Die {
 private:
-    int numOfSides;
+    const int numOfSides = 6;
     int faceValue;
 public:
     Die();
+    Die(int numSides);
     void setfaceValue(int v);
     int getfaceValue();
-    void setSides(int s);
     int getSides();
     void roll();
     std::string describeDie();
 };
-
 
 #endif

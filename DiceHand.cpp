@@ -1,13 +1,21 @@
 #include "DiceHand.h"
 
-DiceHand::DiceHand() {
-    size = 5;
+DiceHand::DiceHand() : DiceHand(new Die[5], 5) {}
+
+DiceHand::DiceHand(Die* diePtr, int sizeOfHand) {
+    size = sizeOfHand;
     dice = new Die[size];
     for (int i = 0; i < size; ++i) {
-        dice[i].roll();
+        new (&dice[i]) Die(diePtr[i]);
     }
 }
 
+DiceHand::~DiceHand() {
+    for (int i = 0; i < size; ++i) {
+        dice[i].~Die(); 
+    }
+    operator delete[](dice); 
+}
 void DiceHand::setSize(int s){
     size = s;
 }

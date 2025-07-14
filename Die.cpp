@@ -1,7 +1,10 @@
 #include "Die.h"
 
-Die::Die(){
-    numOfSides = 6;
+Die::Die() : numOfSides(6){
+    faceValue = rand() % numOfSides + 1;
+}
+
+Die::Die(int numSides) : numOfSides(numSides){
     faceValue = rand() % numOfSides + 1;
 }
 
@@ -11,10 +14,6 @@ void Die::setfaceValue(int v){
 
 int Die::getfaceValue(){
     return faceValue;
-}
-
-void Die::setSides(int s){
-    numOfSides = s;
 }
 
 int Die::getSides(){

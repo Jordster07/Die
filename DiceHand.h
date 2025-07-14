@@ -7,10 +7,9 @@ private:
     Die* dice;
     int size;
 public:
-    DiceHand(); 
-    ~DiceHand() {
-        delete[] dice;
-    }
+    DiceHand();
+    DiceHand(Die* diePtr, int sizeOfHand);  
+    ~DiceHand();
     void setSize(int s);
     int getSize();
     void setDiceFaceValue(int index, int value);
