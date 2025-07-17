@@ -50,7 +50,7 @@ int main(){
 
     const int maxRounds = 6;
     for (int round = 0; round < maxRounds; ++round) {
-        std::cout << "\n🎲 --- Round " << (round + 1) << " ---\n";
+        std::cout << "\n --- Round " << (round + 1) << " ---\n";
 
         hand.rollAllDice();
         console.displayDiceHand(hand);
@@ -66,15 +66,15 @@ int main(){
         do {
             category = console.promptCategoryChoice();
             if (hand.isCategoryUsed(category)) {
-                std::cout << "⚠️ That category has already been used. Choose another.\n";
+                std::cout << "That category has already been used. Choose another.\n";
             }
         } while (hand.isCategoryUsed(category));
 
         int score = hand.scoreCategory(category);
-        std::cout << "✅ You scored " << score << " points this round.\n";
+        std::cout << "You scored " << score << " points this round.\n";
     }
 
-    std::cout << "\n🏁 Game Over! Your final score is: " << hand.getTotalScore() << " 🎉\n";
+    std::cout << "\n Game Over! Your final score is: " << hand.getTotalScore() << " 🎉\n";
     return 0;
 }
 
