@@ -12,7 +12,7 @@ void Die::setfaceValue(int v){
     faceValue = v;
 }
 
-int Die::getfaceValue(){
+int Die::getfaceValue() const{
     return faceValue;
 }
 
@@ -20,7 +20,7 @@ int Die::getSides(){
     return numOfSides;
 }
 
-std::string Die::describeDie(){
+std::string Die::describeDie() const{
     return 
     "The die landed on: " + std::to_string(faceValue) + "\n";
 }   

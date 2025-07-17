@@ -10,10 +10,10 @@ public:
     Die();
     Die(int numSides);
     void setfaceValue(int v);
-    int getfaceValue();
+    int getfaceValue() const;
     int getSides();
     void roll();
-    std::string describeDie();
+    std::string describeDie() const;
 };
 
 #endif

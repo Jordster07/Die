@@ -4,18 +4,18 @@
 #include <ctime>
 #include "Die.h"
 #include "DiceHand.h"
-#include"DiceConsole.h"
+#include"ConsoleUI.h"
 using namespace std;
 
-
+/*
 void testDiceHand() {
     srand(time(0));
-    Die* twoDice = new Die[2];
+    Die* twoDice = new Die[5];
 
     for (int i = 0; i < 2; ++i)
         twoDice[i].roll();
 
-    DiceHand hand(twoDice, 2); 
+    DiceHand hand(twoDice, 5); 
     DiceConsole console;
 
     string menu = "1) Re-roll dice\n2) Stay";
@@ -23,12 +23,12 @@ void testDiceHand() {
 
     do {
         cout << "\nCurrent Dice:\n";
-        console.displayDice(twoDice, 2); 
+        console.displayDice(twoDice, 5); 
 
         choice = console.getUserChoice(menu);
 
         if (choice == 1) {
-            for (int i = 0; i < 2; ++i)
+            for (int i = 0; i < 5; ++i)
                 twoDice[i].roll();
         } else if (choice != 2) {
             cout << "Invalid choice. Try again.\n";
@@ -37,19 +37,52 @@ void testDiceHand() {
     } while (choice != 2);
 
     cout << "\nFinal Dice:\n";
-    console.displayDice(twoDice, 2);
+    console.displayDice(twoDice, 5);
 
     delete[] twoDice;
 }
-
+*/
 
 int main(){
+    srand(time(0));
+    DiceHand hand;
+    DiceConsole console;
 
+    const int maxRounds = 6;
+    for (int round = 0; round < maxRounds; ++round) {
+        std::cout << "\n🎲 --- Round " << (round + 1) << " ---\n";
+
+        hand.rollAllDice();
+        console.displayDiceHand(hand);
+
+        for (int i = 0; i < 2; ++i) {
+            bool rerollFlags[5];
+            console.getRerollFlagsFromInput(rerollFlags);
+            hand.rerollSelectedDice(rerollFlags);
+            console.displayDiceHand(hand);
+        }
+
+        int category;
+        do {
+            category = console.promptCategoryChoice();
+            if (hand.isCategoryUsed(category)) {
+                std::cout << "⚠️ That category has already been used. Choose another.\n";
+            }
+        } while (hand.isCategoryUsed(category));
+
+        int score = hand.scoreCategory(category);
+        std::cout << "✅ You scored " << score << " points this round.\n";
+    }
+
+    std::cout << "\n🏁 Game Over! Your final score is: " << hand.getTotalScore() << " 🎉\n";
+    return 0;
+}
+
+/*
 srand(time(0));
 testDiceHand();
 return 0;
-}
-/*
+
 Die die1;
 Die die2;
 Die die3;

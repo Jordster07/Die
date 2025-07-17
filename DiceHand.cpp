@@ -1,26 +1,21 @@
 #include "DiceHand.h"
 
-DiceHand::DiceHand() : DiceHand(new Die[5], 5) {}
-
-DiceHand::DiceHand(Die* diePtr, int sizeOfHand) {
-    size = sizeOfHand;
-    dice = new Die[size];
-    for (int i = 0; i < size; ++i) {
-        new (&dice[i]) Die(diePtr[i]);
+DiceHand::DiceHand() : totalScore(0) {
+    size = 5;
+    totalScore = 0;
+    for (int i = 0; i < 5; ++i) {
+        dice[i].roll();
+    }
+    for (int i = 0; i < 6; ++i) {
+        usedCategories[i] = false;
     }
 }
 
-DiceHand::~DiceHand() {
-    for (int i = 0; i < size; ++i) {
-        dice[i].~Die(); 
-    }
-    operator delete[](dice); 
-}
 void DiceHand::setSize(int s){
     size = s;
 }
 
-int DiceHand::getSize(){
+int DiceHand::getSize() const{
     return size;
 }
 void DiceHand::setDiceFaceValue(int index, int value){
@@ -29,7 +24,7 @@ void DiceHand::setDiceFaceValue(int index, int value){
 }
 }
 
-int DiceHand::getDiceFaceValue(int index) {
+int DiceHand::getDiceFaceValue(int index) const {
     if (index >= 0 && index < size){
         return dice[index].getfaceValue();
     }
@@ -45,11 +40,42 @@ void DiceHand::rollSpecificDie(int dieNum) {
     }
 }
 
-std::string DiceHand::displayDieHand() const {
-    std::string output = "Die Hand: ";
-    for (int i = 0; i < size; ++i) {
-        output += dice[i].describeDie();
-        if (i != size - 1) output += ", ";
+void DiceHand::rerollSelectedDice(const bool rerollFlags[5]) {
+    for (int i = 0; i < 5; ++i) {
+        if (rerollFlags[i]) {
+            dice[i].roll();
+        }
     }
-    return output;
+}
+int DiceHand::scoreCategory(int categoryIndex) {
+    if (categoryIndex < 0 || categoryIndex >= 6 || usedCategories[categoryIndex]) {
+        return 0;
     }
+
+    int targetValue = categoryIndex + 1;
+    int score = 0;
+
+    for (int i = 0; i < 5; ++i) {
+        if (dice[i].getfaceValue() == targetValue) {
+            score += targetValue;
+        }
+    }
+
+    usedCategories[categoryIndex] = true;
+    totalScore += score;
+    return score;
+}
+
+bool DiceHand::isCategoryUsed(int categoryIndex) const {
+    return (categoryIndex >= 0 && categoryIndex < 6) ? usedCategories[categoryIndex] : true;
+}
+
+void DiceHand::markCategoryUsed(int categoryIndex) {
+    if (categoryIndex >= 0 && categoryIndex < 6) {
+        usedCategories[categoryIndex] = true;
+    }
+}
+
+int DiceHand::getTotalScore(){
+    return totalScore;
+}

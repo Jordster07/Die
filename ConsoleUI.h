@@ -1,5 +1,5 @@
-#ifndef DICE_CONSOLE
-#define DICE_CONSOLE
+#ifndef CONSOLE_UI
+#define CONSOLE_UI
 #include<iostream>
 #include<string>
 #include"Die.h"
@@ -9,8 +9,11 @@ using namespace std;
 class DiceConsole{
 public:    
     void displayDie(Die* die);
-    void displayDice(Die* dice, int size);
     int getUserChoice(string menu);
+    void getRerollFlagsFromInput(bool rerollFlags[5]);
+    int promptCategoryChoice();
+    void displayDiceHand(const DiceHand& hand);
+
 };
 
 

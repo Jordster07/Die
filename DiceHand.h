@@ -4,19 +4,24 @@
 
 class DiceHand{
 private:
-    Die* dice;
     int size;
+    Die dice[5];
+    bool usedCategories[6];
+    int totalScore;
 public:
     DiceHand();
-    DiceHand(Die* diePtr, int sizeOfHand);  
-    ~DiceHand();
     void setSize(int s);
-    int getSize();
+    int getSize() const;
+    int getTotalScore();
     void setDiceFaceValue(int index, int value);
-    int getDiceFaceValue(int index);
+    int getDiceFaceValue(int index) const;
     void rollAllDice();
     void rollSpecificDie(int dienum);
     std::string displayDieHand() const;
+    void rerollSelectedDice(const bool rerollFlags[5]);
+    int scoreCategory(int categoryIndex);
+    bool isCategoryUsed(int categoryIndex) const;
+    void markCategoryUsed(int categoryIndex);
 
 };
 
