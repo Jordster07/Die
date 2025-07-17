@@ -74,7 +74,7 @@ int main(){
         std::cout << "You scored " << score << " points this round.\n";
     }
 
-    std::cout << "\n Game Over! Your final score is: " << hand.getTotalScore() << " 🎉\n";
+    std::cout << "\n Game Over! Your final score is: " << hand.getTotalScore() << "\n";
     return 0;
 }
 
